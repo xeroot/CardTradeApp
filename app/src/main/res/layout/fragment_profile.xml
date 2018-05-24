@@ -1,0 +1,67 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.xero.cardtradeapp.ProfileFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:stretchColumns="1">
+            <TableRow>
+                <TextView
+                    android:text="Name:" />
+                <EditText />
+            </TableRow>
+            <TableRow>
+                <TextView
+                    android:text="Email:" />
+                <EditText />
+            </TableRow>
+            <TableRow>
+                <TextView
+                    android:text="Phone Number:" />
+                <EditText />
+            </TableRow>
+            <TableRow>
+                <TextView
+                    android:text="Age:" />
+                <EditText android:enabled="false"/>
+            </TableRow>
+            <TableRow>
+                <TextView
+                    android:text="Gender:" />
+                <EditText android:enabled="false"/>
+            </TableRow>
+            <TableRow>
+                <TextView
+                    android:text="Actual Money:" />
+                <EditText android:enabled="false"/>
+            </TableRow>
+            <TableRow>
+                <TextView
+                    android:text="Direction:" />
+                <EditText />
+            </TableRow>
+            <TableRow>
+                <TextView
+                    android:text="Score:" />
+                <EditText android:enabled="false"/>
+            </TableRow>
+
+        </TableLayout>
+        <Button
+            android:id="@+id/btSaveProfile_profile"
+            android:text="Save Profile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+</FrameLayout>

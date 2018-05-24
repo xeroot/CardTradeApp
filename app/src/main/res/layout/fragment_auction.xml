@@ -1,0 +1,59 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.xero.cardtradeapp.AuctionFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <EditText
+            android:id="@+id/etProductName_auction"
+            android:hint="Product Name"
+            android:inputType="textPersonName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <Button
+            android:id="@+id/btAddPhoto_auction"
+            android:text="Add Photo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <ImageView
+            android:id="@+id/ivPhotoCard_auction"
+            android:src="@mipmap/ic_launcher"
+            android:layout_width="120dp"
+            android:layout_height="120dp" />
+
+        <EditText
+            android:id="@+id/etDescription_auction"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:lines="3"
+            android:maxLines="5"
+            android:hint="Some description..."
+            android:inputType="textMultiLine" />
+        <EditText
+            android:id="@+id/etStartDate_auction"
+            android:hint="Start Date"
+            android:inputType="date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <EditText
+            android:id="@+id/etFinishDate_auction"
+            android:hint="Finish Date"
+            android:inputType="date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:id="@+id/btCreateAuction_auction"
+            android:text="CREATE AUCTION"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+</FrameLayout>
