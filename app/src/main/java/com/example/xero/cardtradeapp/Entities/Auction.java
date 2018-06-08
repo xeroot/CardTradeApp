@@ -2,6 +2,9 @@ package com.example.xero.cardtradeapp.Entities;
 // Generated May 12, 2018 6:06:40 PM by Hibernate Tools 4.3.1
 
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashSet;
@@ -30,7 +33,7 @@ public class Auction  implements java.io.Serializable {
     public Auction() {
     }
 
-	
+
     public Auction(Card card, User userByIdUserSeller, Date beginDate, Date endDate, String status, String type) {
         this.card = card;
         this.userByIdUserSeller = userByIdUserSeller;
@@ -53,100 +56,121 @@ public class Auction  implements java.io.Serializable {
        this.reports = reports;
        this.orders = orders;
     }
-   
+
     public Integer getId() {
         return this.id;
     }
-    
+
     public void setId(Integer id) {
         this.id = id;
     }
     public Card getCard() {
         return this.card;
     }
-    
+
     public void setCard(Card card) {
         this.card = card;
     }
     public User getUserByIdUserSeller() {
         return this.userByIdUserSeller;
     }
-    
+
     public void setUserByIdUserSeller(User userByIdUserSeller) {
         this.userByIdUserSeller = userByIdUserSeller;
     }
     public User getUserByIdCurrentUser() {
         return this.userByIdCurrentUser;
     }
-    
+
     public void setUserByIdCurrentUser(User userByIdCurrentUser) {
         this.userByIdCurrentUser = userByIdCurrentUser;
     }
     public Date getBeginDate() {
         return this.beginDate;
     }
-    
+
     public void setBeginDate(Date beginDate) {
         this.beginDate = beginDate;
     }
     public Date getEndDate() {
         return this.endDate;
     }
-    
+
     public void setEndDate(Date endDate) {
         this.endDate = endDate;
     }
     public String getStatus() {
         return this.status;
     }
-    
+
     public void setStatus(String status) {
         this.status = status;
     }
     public String getType() {
         return this.type;
     }
-    
+
     public void setType(String type) {
         this.type = type;
     }
     public BigDecimal getCurrentAmount() {
         return this.currentAmount;
     }
-    
+
     public void setCurrentAmount(BigDecimal currentAmount) {
         this.currentAmount = currentAmount;
     }
     public BigDecimal getAmount() {
         return this.amount;
     }
-    
+
     public void setAmount(BigDecimal amount) {
         this.amount = amount;
     }
     public Set getNotifications() {
         return this.notifications;
     }
-    
+
     public void setNotifications(Set notifications) {
         this.notifications = notifications;
     }
     public Set getReports() {
         return this.reports;
     }
-    
+
     public void setReports(Set reports) {
         this.reports = reports;
     }
     public Set getOrders() {
         return this.orders;
     }
-    
+
     public void setOrders(Set orders) {
         this.orders = orders;
     }
 
+    public String toJson(){
+        String jsonText = null;
 
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("id", getId());
+            jsonObject.put("cardId", getCard().getId());
+            jsonObject.put("idUserSeller", getUserByIdUserSeller().getId());
+            jsonObject.put("idCurrentUser", getUserByIdCurrentUser().getId());
+            jsonObject.put("beginDate", getBeginDate());
+            jsonObject.put("endDate", getEndDate());
+            jsonObject.put("status", getStatus());
+            jsonObject.put("type", getType());
+            jsonObject.put("currentAmount", getCurrentAmount());
+            jsonObject.put("amount", getAmount());
+            jsonText = jsonObject.toString();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return jsonText;
+    }
 
 
 }
