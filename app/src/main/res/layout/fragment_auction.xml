@@ -33,7 +33,7 @@
             android:layout_height="wrap_content"
             android:lines="3"
             android:maxLines="5"
-            android:hint="Some description..."
+            android:hint="Minimun Amount"
             android:inputType="textMultiLine" />
         <EditText
             android:id="@+id/etStartDate_auction"
