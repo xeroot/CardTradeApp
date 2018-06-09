@@ -28,11 +28,13 @@
             android:layout_height="120dp" />
 
         <EditText
-            android:id="@+id/etMinValue_auction"
+            android:id="@+id/etDescription_auction"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Minimun Amount"
-            android:inputType="numberDecimal" />
+            android:lines="3"
+            android:maxLines="5"
+            android:hint="Some description..."
+            android:inputType="textMultiLine" />
         <EditText
             android:id="@+id/etStartDate_auction"
             android:hint="Start Date"

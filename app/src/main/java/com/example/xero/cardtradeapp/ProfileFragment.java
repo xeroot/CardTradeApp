@@ -2,24 +2,11 @@ package com.example.xero.cardtradeapp;
 
 import android.content.Context;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.renderscript.Sampler;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
-
-import com.example.xero.cardtradeapp.BusinessLogic.CardBusinessLogic.IProfileService;
-import com.example.xero.cardtradeapp.BusinessLogic.CardBusinessLogic.ProfileService;
-import com.example.xero.cardtradeapp.Entities.Profile;
-import com.example.xero.cardtradeapp.Entities.User;
-
-import java.math.BigDecimal;
-import java.util.ArrayList;
 
 
 /**
@@ -73,166 +60,6 @@ public class ProfileFragment extends Fragment {
         }
     }
 
-
-
-    public void fillSpace(ArrayList<Profile> profiles){
-
-
-        EditText txtview = getView().findViewById(R.id.name);
-        txtview.setText(profiles.get(0).getName().toString());
-
-        EditText txtview2 = getView().findViewById(R.id.email);
-        txtview2.setText(profiles.get(0).getEmail().toString());
-
-        EditText txtview3 = getView().findViewById(R.id.phonenumber);
-        txtview3.setText(profiles.get(0).getPhone().toString());
-
-        EditText txtview4 = getView().findViewById(R.id.age);
-        txtview4.setText(profiles.get(0).getAge().toString());
-
-        EditText txtview5 = getView().findViewById(R.id.gender);
-        txtview5.setText(profiles.get(0).getSex().toString());
-
-        EditText txtview6 = getView().findViewById(R.id.coins);
-        int a;
-        a=profiles.get(0).getCoins();
-        txtview6.setText(String.valueOf(a));
-
-        EditText txtview7 = getView().findViewById(R.id.address);
-        txtview7.setText(profiles.get(0).getAddress().toString());
-
-        EditText txtview8 = getView().findViewById(R.id.rating);
-        txtview8.setText(profiles.get(0).getRating().toString());
-
-    }
-
-
-    @Override
-    public void onStart() {
-        super.onStart();
-
-        final GetTask getTask = new GetTask();
-        getTask.execute();
-
-
-        final Button editame =(Button)getView().findViewById(R.id.btnEdit);
-        editame.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                final EditText editanombre = (EditText)getView().findViewById(R.id.name);
-                editanombre.setEnabled(true);
-
-                final EditText editamail =(EditText)getView().findViewById(R.id.email);
-                editamail.setEnabled(true);
-
-                final EditText editaphone =(EditText)getView().findViewById(R.id.phonenumber);
-                editaphone.setEnabled(true);
-
-                final EditText editage =(EditText)getView().findViewById(R.id.age);
-                editage.setEnabled(true);
-
-                final EditText editagender =(EditText)getView().findViewById(R.id.gender);
-                editagender.setEnabled(true);
-
-                final EditText editadress =(EditText)getView().findViewById(R.id.address);
-                editadress.setEnabled(true);
-
-                final EditText monedas = getView().findViewById(R.id.coins);
-                final EditText rate = getView().findViewById(R.id.rating);
-
-                Button editame=(Button)getView().findViewById(R.id.btnEdit);
-                editame.setEnabled(false);
-                editame.setVisibility(View.INVISIBLE);
-
-                Button salvame=(Button)getView().findViewById(R.id.btnSave);
-                salvame.setEnabled(true);
-                salvame.setVisibility(View.VISIBLE);
-
-
-                salvame.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-
-
-                        int userid=1;
-                        String name="",type="",status="",email="",phone="",age="",sex="",address="";
-                        int coins=0;
-
-                        BigDecimal rating= BigDecimal.valueOf(0);
-
-                        Profile perfil = new Profile(name,type,status,email,phone,age,sex,coins,rating,address,userid);
-
-                      //  IProfileService servicio2=new ProfileService();
-                      //  ArrayList<Profile>profi=servicio2.GetProfile();
-
-
-                        perfil.setId(1);
-                        perfil.setName(editanombre.getText().toString());
-                        perfil.setType("Premium");
-                        perfil.setStatus("Active");
-                        perfil.setEmail(editamail.getText().toString());
-                        perfil.setPhone(editaphone.getText().toString());
-                        perfil.setAge(editage.getText().toString());
-                        perfil.setSex(editagender.getText().toString());
-                        perfil.setCoins(Integer.valueOf( monedas.getText().toString()));
-                        perfil.setRating(new BigDecimal(rate.getText().toString()));
-                        perfil.setAddress(editadress.getText().toString());
-                        perfil.setUserId(1);
-
-                        PostTask postTask = new PostTask();
-                        postTask.execute(perfil);
-
-
-
-
-                        Button editame=(Button)getView().findViewById(R.id.btnEdit);
-                        editame.setEnabled(true);
-                        editame.setVisibility(View.VISIBLE);
-
-                        Button salvame=(Button)getView().findViewById(R.id.btnSave);
-                        salvame.setEnabled(false);
-                        salvame.setVisibility(View.INVISIBLE);
-
-
-
-
-                        EditText editanombre = (EditText)getView().findViewById(R.id.name);
-                        editanombre.setEnabled(false);
-
-                        EditText editamail =(EditText)getView().findViewById(R.id.email);
-                        editamail.setEnabled(false);
-
-                        EditText editaphone =(EditText)getView().findViewById(R.id.phonenumber);
-                        editaphone.setEnabled(false);
-
-                        EditText editage =(EditText)getView().findViewById(R.id.age);
-                        editage.setEnabled(false);
-
-                        EditText editagender =(EditText)getView().findViewById(R.id.gender);
-                        editagender.setEnabled(false);
-
-                        EditText editadress =(EditText)getView().findViewById(R.id.address);
-                        editadress.setEnabled(false);
-
-
-                    }
-                });
-
-
-
-            }
-
-
-
-
-
-
-        });
-
-
-    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -278,46 +105,4 @@ public class ProfileFragment extends Fragment {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
-
-
-
-    class PostTask extends AsyncTask<Profile,Boolean,Boolean>{
-
-        @Override
-        protected Boolean doInBackground(Profile... strings) {
-
-            IProfileService itemsAPI = new ProfileService();
-            Boolean funciona= itemsAPI.pushProfile(strings[0]);
-
-            return funciona;
-        }
-
-        @Override
-        protected void onPostExecute(Boolean prof) {
-            super.onPostExecute(prof);
-
-        }
-
-    }
-
-    class GetTask extends AsyncTask<String,ArrayList<Profile>,ArrayList<Profile>> {
-
-        @Override
-        protected ArrayList<Profile> doInBackground(String... strings) {
-
-            IProfileService itemsAPI = new ProfileService();
-            ArrayList<Profile> profiles = itemsAPI.GetProfile();
-
-            return profiles;
-        }
-
-        @Override
-        protected void onPostExecute(ArrayList<Profile> profiles) {
-            super.onPostExecute(profiles);
-            fillSpace(profiles);
-        }
-    }
-
-
-
 }
