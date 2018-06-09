@@ -181,9 +181,8 @@ public class AuctionSelectedFragment extends Fragment {
     }
 
     private int getIdUser(){
-        //SharedPreferences sharedPreferences = getContext().getSharedPreferences("UserSettings",Context.MODE_PRIVATE);
-        //int id = Integer.valueOf(sharedPreferences.getString("idUser","0"));
-        int id=3;
-        return id;
+        SharedPreferences sharedPreferences = getContext().getSharedPreferences("User",Context.MODE_PRIVATE);
+        int idUser = sharedPreferences.getInt("userId",3);// si no lo encuentra toma 3
+        return idUser;
     }
 }

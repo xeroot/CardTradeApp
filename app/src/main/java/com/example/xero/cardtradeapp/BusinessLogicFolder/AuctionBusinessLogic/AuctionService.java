@@ -106,4 +106,47 @@ public class AuctionService implements IAuctionService{
         }catch (Exception ex){Log.d("ERROR (putAuction): ",ex.toString()+": "+ex.getMessage());}
         return result;
     }
+
+    @Override
+    public boolean pushAuction(Auction auction) {
+
+        Log.d("BIEN (pushAuction): ","ENTRANDO 1...!");
+        Boolean result = false;
+        //Default new item with status Created
+        auction.setStatus("Created");
+        Log.d("BIEN (pushAuction): ","ENTRANDO 2...!");
+        try {
+            URL apiUrl = new URL("http://10.0.2.2:45455/api/Auctions");
+
+            // Create connection
+            HttpURLConnection myConnection = (HttpURLConnection) apiUrl.openConnection();
+
+            //Set method type
+            myConnection.setRequestMethod("POST");
+            myConnection.setDoOutput(true);
+
+            Log.d("BIEN (pushAuction): ","ENTRANDO 3...!");
+            //Set data
+            myConnection.setRequestProperty("Content-Type", "application/json");
+            myConnection.setRequestProperty("Accept", "application/json");
+            String itemJson = auction.toJson();
+            myConnection.getOutputStream().write(itemJson.getBytes());
+            Log.d("BIEN (pushAuction): ","ENTRANDO 4...!");
+            Log.d("JSON: ",itemJson);
+            //Process response
+            if (myConnection.getResponseCode() == 201) {
+                // Success
+                // Further processing here
+                Log.d("BIEN (pushAuction): ","FUNCIONO 55555!");
+                result = true;
+            }
+            myConnection.disconnect();
+        }
+        catch (Exception ex){Log.d("ERROR (pushAuction): ",ex.toString()+": "+ex.getMessage());}
+        return result;
+
+
+    }
+
+
 }

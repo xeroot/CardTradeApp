@@ -9,7 +9,7 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        
+
         <TableLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -17,47 +17,47 @@
             <TableRow>
                 <TextView
                     android:text="Name:" />
-                <EditText />
+                <EditText android:id="@+id/etname" />
             </TableRow>
             <TableRow>
                 <TextView
                     android:text="Email:" />
-                <EditText />
+                <EditText android:id="@+id/etemail"/>
             </TableRow>
             <TableRow>
                 <TextView
                     android:text="Phone Number:" />
-                <EditText />
+                <EditText android:id="@+id/etphonenumber"/>
             </TableRow>
             <TableRow>
                 <TextView
                     android:text="Age:" />
-                <EditText android:enabled="false"/>
+                <EditText android:enabled="false" android:id="@+id/etage"/>
             </TableRow>
             <TableRow>
                 <TextView
                     android:text="Gender:" />
-                <EditText android:enabled="false"/>
+                <EditText android:enabled="false" android:id="@+id/etgender"/>
             </TableRow>
             <TableRow>
                 <TextView
                     android:text="Actual Money:" />
-                <EditText android:enabled="false"/>
+                <EditText android:enabled="false" android:id="@+id/etcoins"/>
             </TableRow>
             <TableRow>
                 <TextView
                     android:text="Direction:" />
-                <EditText />
+                <EditText android:id="@+id/etaddress"/>
             </TableRow>
             <TableRow>
                 <TextView
                     android:text="Score:" />
-                <EditText android:enabled="false"/>
+                <EditText android:enabled="false" android:id="@+id/etrating"/>
             </TableRow>
 
         </TableLayout>
         <Button
-            android:id="@+id/btSaveProfile_profile"
+            android:id="@+id/btnSave"
             android:text="Save Profile"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />

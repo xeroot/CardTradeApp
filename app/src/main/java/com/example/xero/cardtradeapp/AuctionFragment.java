@@ -1,12 +1,38 @@
 package com.example.xero.cardtradeapp;
 
+import android.app.DatePickerDialog;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.Uri;
+import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
+import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.DatePicker;
+import android.widget.EditText;
+import android.widget.Toast;
+
+import com.example.xero.cardtradeapp.BusinessLogicFolder.AuctionBusinessLogic.AuctionService;
+import com.example.xero.cardtradeapp.BusinessLogicFolder.AuctionBusinessLogic.IAuctionService;
+import com.example.xero.cardtradeapp.Entities.Auction;
+
+import java.math.BigDecimal;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
+import java.util.Calendar;
+import java.util.Date;
 
 public class AuctionFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
@@ -17,7 +43,12 @@ public class AuctionFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-
+    DatePickerDialog picker;
+    EditText name;
+    EditText minAmount;
+    EditText startDate;
+    EditText endDate;
+    Button createAuction;
     private OnFragmentInteractionListener mListener;
 
     public AuctionFragment() {
@@ -35,13 +66,103 @@ public class AuctionFragment extends Fragment {
     }
 
     @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+
+        name =  view.findViewById(R.id.etProductName_auction);
+        minAmount = view.findViewById(R.id.etMinValue_auction);
+        startDate = view.findViewById(R.id.etStartDate_auction);
+        endDate = view.findViewById(R.id.etFinishDate_auction);
+        createAuction = view.findViewById(R.id.btCreateAuction_auction);
+
+        startDate.setInputType(InputType.TYPE_NULL);
+        startDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Calendar cldr = Calendar.getInstance();
+                int day = cldr.get(Calendar.DAY_OF_MONTH);
+                int month = cldr.get(Calendar.MONTH);
+                int year = cldr.get(Calendar.YEAR);
+                // date picker dialog
+                picker = new DatePickerDialog(getContext(),
+                        new DatePickerDialog.OnDateSetListener() {
+                            @Override
+                            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                                startDate.setText(year + "-" + ((monthOfYear + 1)>=10? "":"0")+(monthOfYear + 1) + "-" + (dayOfMonth>=10? "":"0")+dayOfMonth);
+                            }
+                        }, year, month, day);
+                picker.show();
+            }
+        });
+        endDate.setInputType(InputType.TYPE_NULL);
+        endDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Calendar cldr = Calendar.getInstance();
+                int day = cldr.get(Calendar.DAY_OF_MONTH);
+                int month = cldr.get(Calendar.MONTH);
+                int year = cldr.get(Calendar.YEAR);
+                // date picker dialog
+                picker = new DatePickerDialog(getContext(),
+                        new DatePickerDialog.OnDateSetListener() {
+                            @Override
+                            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                                endDate.setText(year + "-" + ((monthOfYear + 1)>=10? "":"0")+(monthOfYear + 1) + "-" + (dayOfMonth>=10? "":"0")+dayOfMonth);
+                            }
+                        }, year, month, day);
+                picker.show();
+            }
+        });
+        createAuction.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
+            @Override
+            public void onClick(View view) {
+                Context context = getActivity();
+
+                Auction auction = new Auction();
+                int defaultValue = 0;
+                // get idUser from phone
+                SharedPreferences sharedPref = context.getSharedPreferences("User", Context.MODE_PRIVATE);
+                int userId = sharedPref.getInt("userId", defaultValue);
+
+
+                auction.setIdUserSeller(userId);
+                auction.setStatus("active");
+                auction.setType("normal");
+                auction.setIdCurrentUser(0);
+                auction.setIdCard(Integer.parseInt(name.getText().toString())); // solo por mientras
+
+                SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+                String dateInString1 = startDate.getText().toString()+"T00:00:00";
+                String dateInString2 = endDate.getText().toString()+"T00:00:00";
+                try {
+                    auction.setBeginDate(formatter.parse(dateInString1));
+                    auction.setEndDate(formatter.parse(dateInString2));
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                //auction.setEndDate(Date.from(LocalDateTime.ofInstant(Instant.parse(dateInString2), ZoneId.of(ZoneOffset.UTC.getId())).atZone(ZoneId.systemDefault()).toInstant()));
+
+                auction.setCurrentAmount(Double.valueOf(0.0));
+                auction.setAmount( new Double(minAmount.getText().toString()));
+
+                PushAuction pushAuction = new PushAuction();
+                pushAuction.execute(auction);
+            }
+        });
+    }
+
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
     }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -88,5 +209,24 @@ public class AuctionFragment extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+    }
+
+    class PushAuction extends AsyncTask<Auction,Boolean,Boolean> {
+
+
+        @Override
+        protected Boolean doInBackground(Auction... strings) {
+
+            IAuctionService iAuctionService = new AuctionService();
+            return iAuctionService.pushAuction(strings[0]);
+        }
+
+        @Override
+        protected void onPostExecute(Boolean isValid) {
+            super.onPostExecute(isValid);
+            //TOASTY
+            if(isValid) Toast.makeText(getContext(),"BIEN!",Toast.LENGTH_SHORT).show();
+            else Toast.makeText(getContext(),"ERROR!",Toast.LENGTH_SHORT).show();
+        }
     }
 }
