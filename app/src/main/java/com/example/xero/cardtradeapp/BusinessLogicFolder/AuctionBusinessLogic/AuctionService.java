@@ -23,7 +23,7 @@ public class AuctionService implements IAuctionService{
         List<Auction> auctions = new ArrayList<>();
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
         try{
-            URL url = new URL("http://10.0.2.2:45455/api/Auctions"); //3719 //45455
+            URL url = new URL("http://192.168.1.2:49912/api/Auctions"); //3719 //45455
             HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
 
             if(httpURLConnection.getResponseCode()==200){
@@ -45,7 +45,12 @@ public class AuctionService implements IAuctionService{
                                 auction.setCardName(jsonReader.nextString());
                                 break;
                             case "UsernameUserSeller ":
-                                auction.setUsernameUserSeller(jsonReader.nextString());
+                                try{ auction.setUsernameUserSeller(jsonReader.nextString());
+                                }catch (Exception e){
+                                    auction.setUsernameUserSeller("");
+                                    jsonReader.skipValue();
+                                }
+
                                 break;
                             case "Type":
                                 auction.setType(jsonReader.nextString());
@@ -54,7 +59,12 @@ public class AuctionService implements IAuctionService{
                                 auction.setAmount(jsonReader.nextDouble());
                                 break;
                             case "CurrentAmount":
-                                auction.setCurrentAmount(jsonReader.nextDouble());
+                                try{ auction.setCurrentAmount(jsonReader.nextDouble());
+                                }catch (Exception e){
+                                    auction.setCurrentAmount(0.0);
+                                    jsonReader.skipValue();
+                                }
+
                                 break;
                             case "BeginDate":
                                 auction.setBeginDate(formatter.parse(jsonReader.nextString()));
@@ -86,7 +96,7 @@ public class AuctionService implements IAuctionService{
     public boolean putAuction(int idAuction, int idUser, double newcurrentAmount) {
         boolean result = false;
         try{
-            URL url = new URL("http://10.0.2.2:45455/api/Auctions?id="+idAuction+"&idUser="+idUser);
+            URL url = new URL("http://192.168.1.2:49912/api/Auctions?id="+idAuction+"&idUser="+idUser);
             HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
             httpURLConnection.setRequestMethod("PUT");
             httpURLConnection.setDoOutput(true);
@@ -116,7 +126,7 @@ public class AuctionService implements IAuctionService{
         auction.setStatus("Created");
         Log.d("BIEN (pushAuction): ","ENTRANDO 2...!");
         try {
-            URL apiUrl = new URL("http://10.0.2.2:45455/api/Auctions");
+            URL apiUrl = new URL("http://192.168.1.2:49912/api/Auctions");
 
             // Create connection
             HttpURLConnection myConnection = (HttpURLConnection) apiUrl.openConnection();

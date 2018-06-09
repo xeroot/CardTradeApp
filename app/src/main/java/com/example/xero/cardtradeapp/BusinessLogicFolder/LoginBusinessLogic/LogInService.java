@@ -19,7 +19,7 @@ public class LogInService implements  ILogInService {
         Boolean isValid = false;
         int userId= 0;
         try {
-            String url = "http://10.0.2.2:45455/api/Users?username="+username+"&password="+password;
+            String url = "http://192.168.1.2:49912/api/Users?username="+username+"&password="+password;
             URL apiUrl = new URL(url);
 
             // Create connection

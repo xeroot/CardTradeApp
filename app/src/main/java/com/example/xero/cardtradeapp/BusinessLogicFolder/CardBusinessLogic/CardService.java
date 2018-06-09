@@ -18,7 +18,7 @@ public class CardService implements ICardService {
     public List<Card> getCards() {
         List<Card> cards = new ArrayList<>();
         try{
-            URL url = new URL("http://10.0.2.2:45455/api/Cards/"); //3719 //45455
+            URL url = new URL("http://192.168.1.2:49912/api/Cards/"); //3719 //45455
             HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
 
             if(httpURLConnection.getResponseCode()==200){

@@ -4,16 +4,19 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.renderscript.Sampler;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.example.xero.cardtradeapp.BusinessLogicFolder.ProfileBusinessLogic.IProfileService;
 import com.example.xero.cardtradeapp.BusinessLogicFolder.ProfileBusinessLogic.ProfileService;
 import com.example.xero.cardtradeapp.Entities.Profile;
+import com.example.xero.cardtradeapp.Entities.User;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -70,33 +73,40 @@ public class ProfileFragment extends Fragment {
         }
     }
 
+
+
     public void fillSpace(ArrayList<Profile> profiles){
-        EditText txtview = getView().findViewById(R.id.etname);
+
+
+        EditText txtview = getView().findViewById(R.id.name);
         txtview.setText(profiles.get(0).getName().toString());
 
-        EditText txtview2 = getView().findViewById(R.id.etemail);
+        EditText txtview2 = getView().findViewById(R.id.email);
         txtview2.setText(profiles.get(0).getEmail().toString());
 
-        EditText txtview3 = getView().findViewById(R.id.etphonenumber);
+        EditText txtview3 = getView().findViewById(R.id.phonenumber);
         txtview3.setText(profiles.get(0).getPhone().toString());
 
-        EditText txtview4 = getView().findViewById(R.id.etage);
+        EditText txtview4 = getView().findViewById(R.id.age);
         txtview4.setText(profiles.get(0).getAge().toString());
 
-        EditText txtview5 = getView().findViewById(R.id.etgender);
+        EditText txtview5 = getView().findViewById(R.id.gender);
         txtview5.setText(profiles.get(0).getSex().toString());
 
-        EditText txtview6 = getView().findViewById(R.id.etcoins);
-        int a = profiles.get(0).getCoins();
+        EditText txtview6 = getView().findViewById(R.id.coins);
+        int a;
+        a=profiles.get(0).getCoins();
         txtview6.setText(String.valueOf(a));
 
-        EditText txtview7 = getView().findViewById(R.id.etaddress);
+        EditText txtview7 = getView().findViewById(R.id.address);
         txtview7.setText(profiles.get(0).getAddress().toString());
 
-        EditText txtview8 = getView().findViewById(R.id.etrating);
+        EditText txtview8 = getView().findViewById(R.id.rating);
         txtview8.setText(profiles.get(0).getRating().toString());
 
     }
+
+
     @Override
     public void onStart() {
         super.onStart();
@@ -104,68 +114,45 @@ public class ProfileFragment extends Fragment {
         final GetTask getTask = new GetTask();
         getTask.execute();
 
-        /*
+
         final Button editame =(Button)getView().findViewById(R.id.btnEdit);
         editame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                final EditText editanombre = (EditText)getView().findViewById(R.id.etname);
+                final EditText editanombre = (EditText)getView().findViewById(R.id.name);
                 editanombre.setEnabled(true);
 
-                final EditText editamail =(EditText)getView().findViewById(R.id.etemail);
+                final EditText editamail =(EditText)getView().findViewById(R.id.email);
                 editamail.setEnabled(true);
 
-                final EditText editaphone =(EditText)getView().findViewById(R.id.etphonenumber);
+                final EditText editaphone =(EditText)getView().findViewById(R.id.phonenumber);
                 editaphone.setEnabled(true);
 
-                final EditText editage =(EditText)getView().findViewById(R.id.etage);
+                final EditText editage =(EditText)getView().findViewById(R.id.age);
                 editage.setEnabled(true);
 
-                final EditText editagender =(EditText)getView().findViewById(R.id.etgender);
+                final EditText editagender =(EditText)getView().findViewById(R.id.gender);
                 editagender.setEnabled(true);
 
-                final EditText editadress =(EditText)getView().findViewById(R.id.etaddress);
+                final EditText editadress =(EditText)getView().findViewById(R.id.address);
                 editadress.setEnabled(true);
 
-                final EditText monedas = getView().findViewById(R.id.etcoins);
-                final EditText rate = getView().findViewById(R.id.etrating);
-
+                final EditText monedas = getView().findViewById(R.id.coins);
+                final EditText rate = getView().findViewById(R.id.rating);
 
                 Button editame=(Button)getView().findViewById(R.id.btnEdit);
                 editame.setEnabled(false);
                 editame.setVisibility(View.INVISIBLE);
-                */
+
                 Button salvame=(Button)getView().findViewById(R.id.btnSave);
                 salvame.setEnabled(true);
                 salvame.setVisibility(View.VISIBLE);
 
 
-
                 salvame.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-
-                        final EditText editanombre = (EditText)getView().findViewById(R.id.etname);
-                        editanombre.setEnabled(true);
-
-                        final EditText editamail =(EditText)getView().findViewById(R.id.etemail);
-                        editamail.setEnabled(true);
-
-                        final EditText editaphone =(EditText)getView().findViewById(R.id.etphonenumber);
-                        editaphone.setEnabled(true);
-
-                        final EditText editage =(EditText)getView().findViewById(R.id.etage);
-                        editage.setEnabled(true);
-
-                        final EditText editagender =(EditText)getView().findViewById(R.id.etgender);
-                        editagender.setEnabled(true);
-
-                        final EditText editadress =(EditText)getView().findViewById(R.id.etaddress);
-                        editadress.setEnabled(true);
-
-                        final EditText monedas = getView().findViewById(R.id.etcoins);
-                        final EditText rate = getView().findViewById(R.id.etrating);
 
 
                         int userid=1;
@@ -199,7 +186,7 @@ public class ProfileFragment extends Fragment {
 
 
 
-                        /*Button editame=(Button)getView().findViewById(R.id.btnEdit);
+                        Button editame=(Button)getView().findViewById(R.id.btnEdit);
                         editame.setEnabled(true);
                         editame.setVisibility(View.VISIBLE);
 
@@ -210,23 +197,23 @@ public class ProfileFragment extends Fragment {
 
 
 
-                        EditText editanombre = (EditText)getView().findViewById(R.id.etname);
+                        EditText editanombre = (EditText)getView().findViewById(R.id.name);
                         editanombre.setEnabled(false);
 
-                        EditText editamail =(EditText)getView().findViewById(R.id.etemail);
+                        EditText editamail =(EditText)getView().findViewById(R.id.email);
                         editamail.setEnabled(false);
 
-                        EditText editaphone =(EditText)getView().findViewById(R.id.etphonenumber);
+                        EditText editaphone =(EditText)getView().findViewById(R.id.phonenumber);
                         editaphone.setEnabled(false);
 
-                        EditText editage =(EditText)getView().findViewById(R.id.etage);
+                        EditText editage =(EditText)getView().findViewById(R.id.age);
                         editage.setEnabled(false);
 
-                        EditText editagender =(EditText)getView().findViewById(R.id.etgender);
+                        EditText editagender =(EditText)getView().findViewById(R.id.gender);
                         editagender.setEnabled(false);
 
-                        EditText editadress =(EditText)getView().findViewById(R.id.etaddress);
-                        editadress.setEnabled(false);*/
+                        EditText editadress =(EditText)getView().findViewById(R.id.address);
+                        editadress.setEnabled(false);
 
 
                     }
@@ -234,14 +221,14 @@ public class ProfileFragment extends Fragment {
 
 
 
-            /*}
+            }
 
 
 
 
 
 
-        });*/
+        });
 
 
     }
@@ -301,6 +288,7 @@ public class ProfileFragment extends Fragment {
 
             IProfileService itemsAPI = new ProfileService();
             Boolean funciona= itemsAPI.pushProfile(strings[0]);
+
             return funciona;
         }
 
@@ -319,6 +307,7 @@ public class ProfileFragment extends Fragment {
 
             IProfileService itemsAPI = new ProfileService();
             ArrayList<Profile> profiles = itemsAPI.GetProfile();
+
             return profiles;
         }
 

@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
 import com.example.xero.cardtradeapp.Entities.Auction;
+import com.example.xero.cardtradeapp.Entities.Order;
 
 public class MainActivity extends AppCompatActivity
 implements
@@ -16,7 +17,8 @@ implements
         AuctionFragment.OnFragmentInteractionListener,
         ProfileFragment.OnFragmentInteractionListener,
         NotificationsFragment.OnFragmentInteractionListener,
-        AuctionSelectedFragment.OnFragmentInteractionListener
+        AuctionSelectedFragment.OnFragmentInteractionListener,
+        OrderFragment.OnListFragmentInteractionListener
 {
 
     //MenuItem itemSearch;
@@ -42,7 +44,7 @@ implements
                     fragment = new ProfileFragment();
                     break;
                 case R.id.navigation_notifications:
-                    fragment = new NotificationsFragment();
+                    fragment = new OrderFragment();
                     break;
                 default:
                     /*searchView.setQuery("", false);
@@ -81,6 +83,11 @@ implements
         AuctionSelectedFragment auctionSelectedFragment = new AuctionSelectedFragment();
         auctionSelectedFragment.setAuction_selected(item);
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, auctionSelectedFragment).commit();
+    }
+
+    @Override
+    public void onListFragmentInteraction(Order item) {
+
     }
 
     /*

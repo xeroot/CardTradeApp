@@ -10,97 +10,135 @@ import java.util.Date;
 public class Order  implements java.io.Serializable {
 
 
-     private Integer id;
-     private Auction auction;
-     private boolean isReviced;
-     private Date dateRecived;
-     private String status;
-     private Date beginDate;
-     private Date endDate;
-     private String shippingMethod;
+    private Integer id;
+    private int idAuction;
+    private boolean isReviced;
+    private String dateRecived;
+    private String status;
+    private String beginDate;
+    private String endDate;
+    private String shippingMethod;
+    private String cardName;
+    private double cost;
+    private String buyerOrSeller;
+    private int idUserSeller;
 
     public Order() {
     }
 
-	
-    public Order(Auction auction, boolean isReviced, String status, Date beginDate, Date endDate, String shippingMethod) {
-        this.auction = auction;
+
+    public Order(Integer id, int idAuction, boolean isReviced,String dateRecived, String status, String beginDate, String endDate, String shippingMethod,String cardName, double cost, String buyerOrSeller, int idUserSeller) {
+        this.id = id;
+        this.idAuction = idAuction;
         this.isReviced = isReviced;
         this.status = status;
         this.beginDate = beginDate;
         this.endDate = endDate;
         this.shippingMethod = shippingMethod;
+        this.cardName = cardName;
+        this.cost = cost;
+        this.buyerOrSeller = buyerOrSeller;
+        this.idUserSeller = idUserSeller;
     }
-    public Order(Auction auction, boolean isReviced, Date dateRecived, String status, Date beginDate, Date endDate, String shippingMethod) {
-       this.auction = auction;
-       this.isReviced = isReviced;
-       this.dateRecived = dateRecived;
-       this.status = status;
-       this.beginDate = beginDate;
-       this.endDate = endDate;
-       this.shippingMethod = shippingMethod;
+    public Order(int idAuction, boolean isReviced, String dateRecived, String status, String beginDate, String endDate, String shippingMethod) {
+        this.idAuction = idAuction;
+        this.isReviced = isReviced;
+        this.dateRecived = dateRecived;
+        this.status = status;
+        this.beginDate = beginDate;
+        this.endDate = endDate;
+        this.shippingMethod = shippingMethod;
     }
-   
+
     public Integer getId() {
         return this.id;
     }
-    
+
     public void setId(Integer id) {
         this.id = id;
     }
-    public Auction getAuction() {
-        return this.auction;
+    public int getAuction() {
+        return this.idAuction;
     }
-    
-    public void setAuction(Auction auction) {
-        this.auction = auction;
+
+    public void setAuction(int auction) {
+        this.idAuction = auction;
     }
     public boolean isIsReviced() {
         return this.isReviced;
     }
-    
+
     public void setIsReviced(boolean isReviced) {
         this.isReviced = isReviced;
     }
-    public Date getDateRecived() {
+    public String getDateRecived() {
         return this.dateRecived;
     }
-    
-    public void setDateRecived(Date dateRecived) {
+
+    public void setDateRecived(String dateRecived) {
         this.dateRecived = dateRecived;
     }
     public String getStatus() {
         return this.status;
     }
-    
+
     public void setStatus(String status) {
         this.status = status;
     }
-    public Date getBeginDate() {
+    public String getBeginDate() {
         return this.beginDate;
     }
-    
-    public void setBeginDate(Date beginDate) {
+
+    public void setBeginDate(String beginDate) {
         this.beginDate = beginDate;
     }
-    public Date getEndDate() {
+    public String getEndDate() {
         return this.endDate;
     }
-    
-    public void setEndDate(Date endDate) {
+
+    public void setEndDate(String endDate) {
         this.endDate = endDate;
     }
     public String getShippingMethod() {
         return this.shippingMethod;
     }
-    
+
     public void setShippingMethod(String shippingMethod) {
         this.shippingMethod = shippingMethod;
     }
 
 
+    public String getCardName() {
+        return cardName;
+    }
 
+    public void setCardName(String cardName) {
+        this.cardName = cardName;
+    }
 
+    public double getCost() {
+        return cost;
+    }
+
+    public void setCost(double cost) {
+        this.cost = cost;
+    }
+
+    public String getBuyerOrSeller() {
+        return buyerOrSeller;
+    }
+
+    public void setBuyerOrSeller(String buyerOrSeller) {
+        this.buyerOrSeller = buyerOrSeller;
+    }
+
+    public int getIdUserSeller() {
+        return idUserSeller;
+    }
+
+    public void setIdUserSeller(int idUserSeller) {
+        this.idUserSeller = idUserSeller;
+    }
 }
 
 
