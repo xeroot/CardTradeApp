@@ -4,7 +4,69 @@
     android:layout_height="match_parent"
     tools:context="com.example.xero.cardtradeapp.NotificationsFragment">
 
+
     <!-- TODO: Update blank fragment layout -->
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp">
+
+        <LinearLayout
+
+            android:layout_width="95dp"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:text="Card"
+                android:textAlignment="center"
+                android:textSize="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+        </LinearLayout>
+
+        <LinearLayout
+
+            android:layout_width="95dp"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:text="Date"
+                android:textAlignment="center"
+                android:textSize="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+        </LinearLayout>
+        <LinearLayout
+
+            android:layout_width="95dp"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:text="Price"
+                android:textAlignment="center"
+                android:textSize="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+        </LinearLayout>
+        <LinearLayout
+
+            android:layout_width="95dp"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:text="Type"
+                android:textAlignment="center"
+                android:textSize="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+        </LinearLayout>
+
+
+
+    </LinearLayout>
 
 </FrameLayout>

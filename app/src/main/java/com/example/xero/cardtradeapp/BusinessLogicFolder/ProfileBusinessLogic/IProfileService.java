@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 public interface IProfileService {
 
-    ArrayList<Profile>GetProfile();
+    ArrayList<Profile>GetProfile(int idUsuario);
     Boolean pushProfile(Profile profile);
 
 }

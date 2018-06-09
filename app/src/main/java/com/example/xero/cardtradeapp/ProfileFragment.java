@@ -1,6 +1,7 @@
 package com.example.xero.cardtradeapp;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -155,7 +156,7 @@ public class ProfileFragment extends Fragment {
                     public void onClick(View view) {
 
 
-                        int userid=1;
+                        int userid=getIdUser();
                         String name="",type="",status="",email="",phone="",age="",sex="",address="";
                         int coins=0;
 
@@ -167,7 +168,7 @@ public class ProfileFragment extends Fragment {
                         //  ArrayList<Profile>profi=servicio2.GetProfile();
 
 
-                        perfil.setId(1);
+                        perfil.setId(userid);
                         perfil.setName(editanombre.getText().toString());
                         perfil.setType("Premium");
                         perfil.setStatus("Active");
@@ -178,7 +179,7 @@ public class ProfileFragment extends Fragment {
                         perfil.setCoins(Integer.valueOf( monedas.getText().toString()));
                         perfil.setRating(new BigDecimal(rate.getText().toString()));
                         perfil.setAddress(editadress.getText().toString());
-                        perfil.setUserId(1);
+                        perfil.setUserId(userid);
 
                         PostTask postTask = new PostTask();
                         postTask.execute(perfil);
@@ -306,7 +307,7 @@ public class ProfileFragment extends Fragment {
         protected ArrayList<Profile> doInBackground(String... strings) {
 
             IProfileService itemsAPI = new ProfileService();
-            ArrayList<Profile> profiles = itemsAPI.GetProfile();
+            ArrayList<Profile> profiles = itemsAPI.GetProfile(getIdUser());
 
             return profiles;
         }
@@ -320,4 +321,9 @@ public class ProfileFragment extends Fragment {
 
 
 
+    private int getIdUser() {
+        SharedPreferences sharedPreferences = getContext().getSharedPreferences("User", Context.MODE_PRIVATE);
+        int idUser = sharedPreferences.getInt("userId", 3);// si no lo encuentra toma 3
+        return idUser;
+    }
 }

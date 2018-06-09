@@ -1,5 +1,7 @@
 package com.example.xero.cardtradeapp.BusinessLogicFolder.ProfileBusinessLogic;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.util.JsonReader;
 
 import com.example.xero.cardtradeapp.Entities.Profile;
@@ -18,7 +20,7 @@ import java.util.PropertyResourceBundle;
 
 public class ProfileService implements IProfileService {
     @Override
-    public ArrayList<Profile> GetProfile() {
+    public ArrayList<Profile> GetProfile(int idUsuario) {
 
         ArrayList<Profile> Items = null;
 
@@ -26,7 +28,7 @@ public class ProfileService implements IProfileService {
         URL apiUrl = null;
         try {
 
-            apiUrl = new URL("http://192.168.1.2:49912/api/Profiles/1");
+            apiUrl = new URL("http://192.168.1.12:49912/api/Profiles/"+idUsuario);
             // Create connection
             HttpURLConnection myConnection = (HttpURLConnection) apiUrl.openConnection();
             if (myConnection.getResponseCode() == 200) {
@@ -147,6 +149,8 @@ public class ProfileService implements IProfileService {
 
     }
 
+
+
     @Override
     public Boolean pushProfile(Profile profile) {
 
@@ -155,7 +159,7 @@ public class ProfileService implements IProfileService {
 
         try {
             URL apiUrl =
-                    new URL("http://192.168.1.2:49912/api/Profiles/");
+                    new URL("http://192.168.1.12:49912/api/Profiles/");
 
             // Create connection
             HttpURLConnection myConnection =
@@ -164,7 +168,7 @@ public class ProfileService implements IProfileService {
 
             myConnection.setDoOutput(true);
             //Set method type
-                myConnection.setRequestMethod("POST");// CAMBIAR POR PUT!
+                myConnection.setRequestMethod("PUT");// CAMBIAR POR PUT!
 
 
             //Set data
