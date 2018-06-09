@@ -116,27 +116,20 @@ public class AuctionFragment extends Fragment {
         createAuction.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
+                Context context = getActivity();
+                SharedPreferences sharedPref = context.getSharedPreferences("User", Context.MODE_PRIVATE);
+
                 Auction auction = new Auction();
                 int defaultValue = 0;
                 int userId = sharedPref.getInt("userId", defaultValue);
-                User user = new User();
-                user.setId(userId);
-                auction.setUserByIdUserSeller(user);
+
+                auction.setUserByIdUserSeller(userId);
                 auction.setStatus("active");
                 auction.setType("normal");
                 auction.setUserByIdCurrentUser(null);
-                Card card = new Card();
-                card.setId(Integer.parseInt(name.getText().toString()));
-                auction.setCard(card);
-
-                try {
-                    //ARREGLAR LAS FUCKING FECHAS 
-                    auction.setBeginDate(SimpleDateFormat.getDateInstance(DateFormat.MEDIUM).parse(startDate.getText().toString()));
-                    auction.setEndDate(SimpleDateFormat.getDateInstance(DateFormat.MEDIUM).parse(endDate.getText().toString()));
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
+                auction.setCard(Integer.parseInt(name.getText().toString()));
+                auction.setBeginDate(startDate.getText().toString().replace("/"," "));
+                auction.setEndDate( endDate.getText().toString().replace("/"," "));
 
                 auction.setCurrentAmount(BigDecimal.valueOf(0.0));
                 auction.setAmount( new BigDecimal(minAmount.getText().toString()));
@@ -210,23 +203,19 @@ public class AuctionFragment extends Fragment {
         void onFragmentInteraction(Uri uri);
     }
 
-    class PushAuction extends AsyncTask<Auction,Boolean,Boolean> {
+    class PushAuction extends AsyncTask<Auction,Void,Void> {
 
 
         @Override
-        protected Boolean doInBackground(Auction... strings) {
-
-            ILogInService iLogInService = new LogInService();
+        protected Void doInBackground(Auction... strings) {
 
             IAuctionService iAuctionService = new AuctionService();
-            if(iAuctionService.pushAuction(strings[0])){
-                return true;
-            }
-            return false;
+            iAuctionService.pushAuction(strings[0]);
+            return null;
         }
 
         @Override
-        protected void onPostExecute(Boolean isValid) {
+        protected void onPostExecute(Void isValid) {
             super.onPostExecute(isValid);
             //TOASTY
         }

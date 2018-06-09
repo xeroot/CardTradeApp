@@ -2,6 +2,9 @@ package com.example.xero.cardtradeapp.Entities;
 // Generated May 12, 2018 6:06:40 PM by Hibernate Tools 4.3.1
 
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.math.BigDecimal;
 
 /**
@@ -11,7 +14,7 @@ public class Profile  implements java.io.Serializable {
 
 
      private Integer id;
-     private User user;
+     private Integer userid;
      private String name;
      private String type;
      private String status;
@@ -26,8 +29,8 @@ public class Profile  implements java.io.Serializable {
     public Profile() {
     }
 
-    public Profile(User user, String name, String type, String status, String email, String phone, String age, String sex, int coins, BigDecimal rating, String address) {
-       this.user = user;
+    public Profile(String name, String type, String status, String email, String phone, String age, String sex, int coins, BigDecimal rating, String address, int userid) {
+       this.userid = userid;
        this.name = name;
        this.type = type;
        this.status = status;
@@ -47,13 +50,10 @@ public class Profile  implements java.io.Serializable {
     public void setId(Integer id) {
         this.id = id;
     }
-    public User getUser() {
-        return this.user;
-    }
-    
-    public void setUser(User user) {
-        this.user = user;
-    }
+
+    public Integer getUserId() {  return this.userid;   }
+    public void setUserId(Integer userid) { this.userid = userid; }
+
     public String getName() {
         return this.name;
     }
@@ -125,7 +125,30 @@ public class Profile  implements java.io.Serializable {
         this.address = address;
     }
 
+    public String toJson(){
+        String jsonText = null;
 
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("id", getId());
+            jsonObject.put("name", getName());
+            jsonObject.put("type", getType());
+            jsonObject.put("status", getStatus());
+            jsonObject.put("email", getEmail());
+            jsonObject.put("phone", getPhone());
+            jsonObject.put("age", getAge());
+            jsonObject.put("sex", getSex());
+            jsonObject.put("coins", getCoins());
+            jsonObject.put("rating", getRating());
+            jsonObject.put("address", getAddress());
+            jsonObject.put("idUser", getUserId());
+            jsonText = jsonObject.toString();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return jsonText;
+    }
 
 
 }

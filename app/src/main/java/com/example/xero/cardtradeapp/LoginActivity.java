@@ -73,7 +73,9 @@ public class LoginActivity extends AppCompatActivity {
             userId = isValid.second;
 
 
-            SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
+            Context context = getApplicationContext();
+            SharedPreferences sharedPref = context.getSharedPreferences(
+                    "User", Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPref.edit();
             editor.putInt("userId", userId);
             editor.commit();

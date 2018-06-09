@@ -7,7 +7,6 @@ import org.json.JSONObject;
 
 import java.math.BigDecimal;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -17,33 +16,30 @@ public class Auction  implements java.io.Serializable {
 
 
      private Integer id;
-     private Card card;
-     private User userByIdUserSeller;
-     private User userByIdCurrentUser;
-     private Date beginDate;
-     private Date endDate;
+     private Integer card;
+     private Integer userByIdUserSeller;
+     private String beginDate;
+     private String endDate;
      private String status;
      private String type;
      private BigDecimal currentAmount;
      private BigDecimal amount;
-     private Set notifications = new HashSet(0);
-     private Set reports = new HashSet(0);
-     private Set orders = new HashSet(0);
+     private Integer userByIdCurrentUser;
 
     public Auction() {
     }
 
 
-    public Auction(Card card, User userByIdUserSeller, Date beginDate, Date endDate, String status, String type) {
-        this.card = card;
+    public Auction( Integer card,Integer userByIdUserSeller, String beginDate, String endDate, String status, String type) {
+        this.setCard(card);
         this.userByIdUserSeller = userByIdUserSeller;
         this.beginDate = beginDate;
         this.endDate = endDate;
         this.status = status;
         this.type = type;
     }
-    public Auction(Card card, User userByIdUserSeller, User userByIdCurrentUser, Date beginDate, Date endDate, String status, String type, BigDecimal currentAmount, BigDecimal amount, Set notifications, Set reports, Set orders) {
-       this.card = card;
+    public Auction( Integer card,Integer userByIdUserSeller, Integer userByIdCurrentUser, String beginDate, String endDate, String status, String type, BigDecimal currentAmount, BigDecimal amount, Set notifications, Set reports, Set orders) {
+        this.setCard(card);
        this.userByIdUserSeller = userByIdUserSeller;
        this.userByIdCurrentUser = userByIdCurrentUser;
        this.beginDate = beginDate;
@@ -52,9 +48,7 @@ public class Auction  implements java.io.Serializable {
        this.type = type;
        this.currentAmount = currentAmount;
        this.amount = amount;
-       this.notifications = notifications;
-       this.reports = reports;
-       this.orders = orders;
+
     }
 
     public Integer getId() {
@@ -64,39 +58,33 @@ public class Auction  implements java.io.Serializable {
     public void setId(Integer id) {
         this.id = id;
     }
-    public Card getCard() {
-        return this.card;
-    }
 
-    public void setCard(Card card) {
-        this.card = card;
-    }
-    public User getUserByIdUserSeller() {
+    public Integer getUserByIdUserSeller() {
         return this.userByIdUserSeller;
     }
 
-    public void setUserByIdUserSeller(User userByIdUserSeller) {
+    public void setUserByIdUserSeller(Integer userByIdUserSeller) {
         this.userByIdUserSeller = userByIdUserSeller;
     }
-    public User getUserByIdCurrentUser() {
+    public Integer getUserByIdCurrentUser() {
         return this.userByIdCurrentUser;
     }
 
-    public void setUserByIdCurrentUser(User userByIdCurrentUser) {
+    public void setUserByIdCurrentUser(Integer userByIdCurrentUser) {
         this.userByIdCurrentUser = userByIdCurrentUser;
     }
-    public Date getBeginDate() {
+    public String getBeginDate() {
         return this.beginDate;
     }
 
-    public void setBeginDate(Date beginDate) {
+    public void setBeginDate(String beginDate) {
         this.beginDate = beginDate;
     }
-    public Date getEndDate() {
+    public String getEndDate() {
         return this.endDate;
     }
 
-    public void setEndDate(Date endDate) {
+    public void setEndDate(String endDate) {
         this.endDate = endDate;
     }
     public String getStatus() {
@@ -127,43 +115,22 @@ public class Auction  implements java.io.Serializable {
     public void setAmount(BigDecimal amount) {
         this.amount = amount;
     }
-    public Set getNotifications() {
-        return this.notifications;
-    }
-
-    public void setNotifications(Set notifications) {
-        this.notifications = notifications;
-    }
-    public Set getReports() {
-        return this.reports;
-    }
-
-    public void setReports(Set reports) {
-        this.reports = reports;
-    }
-    public Set getOrders() {
-        return this.orders;
-    }
-
-    public void setOrders(Set orders) {
-        this.orders = orders;
-    }
-
     public String toJson(){
         String jsonText = null;
 
         JSONObject jsonObject = new JSONObject();
         try {
             jsonObject.put("id", getId());
-            jsonObject.put("cardId", getCard().getId());
-            jsonObject.put("idUserSeller", getUserByIdUserSeller().getId());
-            jsonObject.put("idCurrentUser", getUserByIdCurrentUser().getId());
+            jsonObject.put("idCard", getCard());
+            jsonObject.put("idUserSeller", getUserByIdUserSeller());
+            jsonObject.put("currentAmount", getCurrentAmount());
+            jsonObject.put("idCurrentUser",getUserByIdCurrentUser());
             jsonObject.put("beginDate", getBeginDate());
             jsonObject.put("endDate", getEndDate());
             jsonObject.put("status", getStatus());
             jsonObject.put("type", getType());
-            jsonObject.put("currentAmount", getCurrentAmount());
             jsonObject.put("amount", getAmount());
+
             jsonText = jsonObject.toString();
         } catch (JSONException e) {
             e.printStackTrace();
@@ -173,6 +140,13 @@ public class Auction  implements java.io.Serializable {
     }
 
 
+    public Integer getCard() {
+        return card;
+    }
+
+    public void setCard(Integer card) {
+        this.card = card;
+    }
 }
 
 

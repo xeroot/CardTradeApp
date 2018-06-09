@@ -12,7 +12,7 @@ public class AuctionService implements IAuctionService {
     public Boolean pushAuction(Auction auction) {
 
         Boolean result = false;
-        //Default new item with status Created
+            //Default new item with status Created
         auction.setStatus("Created");
         try {
             URL apiUrl =
