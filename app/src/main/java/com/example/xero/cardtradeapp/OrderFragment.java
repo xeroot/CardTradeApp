@@ -16,8 +16,7 @@ import com.example.xero.cardtradeapp.BusinessLogicFolder.OrderBusinessLogic.IOrd
 import com.example.xero.cardtradeapp.BusinessLogicFolder.OrderBusinessLogic.OrderService;
 import com.example.xero.cardtradeapp.Entities.Auction;
 import com.example.xero.cardtradeapp.Entities.Order;
-import com.example.xero.cardtradeapp.dummy.DummyContent;
-import com.example.xero.cardtradeapp.dummy.DummyContent.DummyItem;
+
 
 import java.util.List;
 

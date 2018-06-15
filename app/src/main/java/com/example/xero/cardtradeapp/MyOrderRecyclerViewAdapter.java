@@ -1,5 +1,7 @@
 package com.example.xero.cardtradeapp;
 
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,12 +10,11 @@ import android.widget.TextView;
 
 import com.example.xero.cardtradeapp.Entities.Order;
 import com.example.xero.cardtradeapp.OrderFragment.OnListFragmentInteractionListener;
-import com.example.xero.cardtradeapp.dummy.DummyContent.DummyItem;
 
 import java.util.List;
 
 /**
- * {@link RecyclerView.Adapter} that can display a {@link DummyItem} and makes a call to the
+ * {@link RecyclerView.Adapter} that can display a {@link } and makes a call to the
  * specified {@link OnListFragmentInteractionListener}.
  * TODO: Replace the implementation with code for your data type.
  */
@@ -35,7 +36,7 @@ public class MyOrderRecyclerViewAdapter extends RecyclerView.Adapter<MyOrderRecy
     }
 
     @Override
-    public void onBindViewHolder(final ViewHolder holder, int position) {
+    public void onBindViewHolder(final ViewHolder holder, final int position) {
         holder.mItem = mValues.get(position);
         holder.mCardName.setText(mValues.get(position).getCardName());
         holder.mDate.setText(mValues.get(position).getBeginDate());
@@ -45,6 +46,22 @@ public class MyOrderRecyclerViewAdapter extends RecyclerView.Adapter<MyOrderRecy
             @Override
             public void onClick(View v) {
                 if (null != mListener) {
+
+                    Bundle bundle = new Bundle();
+                    bundle.putString("CardName",mValues.get(position).getCardName());
+                    bundle.putString("Date",mValues.get(position).getBeginDate());
+                    bundle.putString("Amount",String.valueOf(mValues.get(position).getCost()));
+                    bundle.putString("Type",mValues.get(position).getBuyerOrSeller());
+                    bundle.putInt("Id",mValues.get(position).getId());
+
+
+
+                    Intent intent = new Intent(v.getContext(), OrderActivity.class);
+                    intent.putExtras(bundle);
+                    v.getContext().startActivity(intent);
+
+
+
                     //Inflar Activity con info de la Orden y mostrar datos de contacto
                     mListener.onListFragmentInteraction(holder.mItem);
                 }
@@ -79,4 +96,9 @@ public class MyOrderRecyclerViewAdapter extends RecyclerView.Adapter<MyOrderRecy
             return super.toString() + " '" + mCardName.getText() + "'";
         }
     }
+
+
+
+
+
 }

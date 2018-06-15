@@ -22,6 +22,8 @@ public class Order  implements java.io.Serializable {
     private double cost;
     private String buyerOrSeller;
     private int idUserSeller;
+    private String contactName;
+    private String contactPhone;
 
     public Order() {
     }
@@ -138,6 +140,22 @@ public class Order  implements java.io.Serializable {
 
     public void setIdUserSeller(int idUserSeller) {
         this.idUserSeller = idUserSeller;
+    }
+
+    public String getContactName() {
+        return contactName;
+    }
+
+    public void setContactName(String contactName) {
+        this.contactName = contactName;
+    }
+
+    public String getContactPhone() {
+        return contactPhone;
+    }
+
+    public void setContactPhone(String contactPhone) {
+        this.contactPhone = contactPhone;
     }
 }
 

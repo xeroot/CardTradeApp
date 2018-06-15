@@ -28,7 +28,7 @@ public class ProfileService implements IProfileService {
         URL apiUrl = null;
         try {
 
-            apiUrl = new URL("http://192.168.1.12:49912/api/Profiles/"+idUsuario);
+            apiUrl = new URL("http://192.168.1.2:49912/api/Profiles/"+idUsuario);
             // Create connection
             HttpURLConnection myConnection = (HttpURLConnection) apiUrl.openConnection();
             if (myConnection.getResponseCode() == 200) {
@@ -159,7 +159,7 @@ public class ProfileService implements IProfileService {
 
         try {
             URL apiUrl =
-                    new URL("http://192.168.1.12:49912/api/Profiles/");
+                    new URL("http://192.168.1.2:49912/api/Profiles/");
 
             // Create connection
             HttpURLConnection myConnection =
