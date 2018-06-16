@@ -1,17 +1,13 @@
 package com.example.xero.cardtradeapp;
 
 import android.os.AsyncTask;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
-
 
 import com.example.xero.cardtradeapp.BusinessLogicFolder.OrderBusinessLogic.IOrderService;
 import com.example.xero.cardtradeapp.BusinessLogicFolder.OrderBusinessLogic.OrderService;
 import com.example.xero.cardtradeapp.Entities.Order;
-
-
-import java.util.ArrayList;
 
 public class OrderActivity extends AppCompatActivity {
 

@@ -48,18 +48,16 @@ public class MyOrderRecyclerViewAdapter extends RecyclerView.Adapter<MyOrderRecy
                 if (null != mListener) {
 
                     Bundle bundle = new Bundle();
-                    bundle.putString("CardName",mValues.get(position).getCardName());
-                    bundle.putString("Date",mValues.get(position).getBeginDate());
-                    bundle.putString("Amount",String.valueOf(mValues.get(position).getCost()));
-                    bundle.putString("Type",mValues.get(position).getBuyerOrSeller());
-                    bundle.putInt("Id",mValues.get(position).getId());
-
+                    bundle.putString("CardName", mValues.get(position).getCardName());
+                    bundle.putString("Date", mValues.get(position).getBeginDate());
+                    bundle.putString("Amount", String.valueOf(mValues.get(position).getCost()));
+                    bundle.putString("Type", mValues.get(position).getBuyerOrSeller());
+                    bundle.putInt("Id", mValues.get(position).getId());
 
 
                     Intent intent = new Intent(v.getContext(), OrderActivity.class);
                     intent.putExtras(bundle);
                     v.getContext().startActivity(intent);
-
 
 
                     //Inflar Activity con info de la Orden y mostrar datos de contacto
@@ -96,9 +94,6 @@ public class MyOrderRecyclerViewAdapter extends RecyclerView.Adapter<MyOrderRecy
             return super.toString() + " '" + mCardName.getText() + "'";
         }
     }
-
-
-
 
 
 }

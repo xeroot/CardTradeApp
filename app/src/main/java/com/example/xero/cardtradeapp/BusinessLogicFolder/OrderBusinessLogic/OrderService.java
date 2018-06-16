@@ -8,13 +8,12 @@ import com.example.xero.cardtradeapp.Entities.Order;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.math.BigDecimal;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 
-public class OrderService implements  IOrderService {
+public class OrderService implements IOrderService {
     @Override
     public ArrayList<Order> GetOrders(int idUser) {
         ArrayList<Order> orders = null;
@@ -45,26 +44,26 @@ public class OrderService implements  IOrderService {
                 //read every
 
 
-                int id=0;
-                Boolean isRecived=false;
-                String dateRecived="";
-                String status="";
-                int idAuction=0;
-                String beginDate="";
-                String endDate="";
-                String shippingMethod="";
-                String cardName="";
-                double cost=0.0;
-                String buyerOrSeller="";
-                int idUserSeller=0;
+                int id = 0;
+                Boolean isRecived = false;
+                String dateRecived = "";
+                String status = "";
+                int idAuction = 0;
+                String beginDate = "";
+                String endDate = "";
+                String shippingMethod = "";
+                String cardName = "";
+                double cost = 0.0;
+                String buyerOrSeller = "";
+                int idUserSeller = 0;
 
-                while(jsonReader.hasNext()){
+                while (jsonReader.hasNext()) {
                     //Read every object
                     jsonReader.beginObject();
                     String description = null;
-                    while(jsonReader.hasNext()){
+                    while (jsonReader.hasNext()) {
                         String property = jsonReader.nextName();
-                        switch (property.toLowerCase()){
+                        switch (property.toLowerCase()) {
                             case "id":
                                 id = jsonReader.nextInt();
                                 break;
@@ -74,10 +73,9 @@ public class OrderService implements  IOrderService {
                             case "daterecived":
                                 try {
                                     dateRecived = jsonReader.nextString();
-                                    dateRecived=dateRecived.split("T")[0];
-                                }
-                                catch (Exception e){
-                                    dateRecived="";
+                                    dateRecived = dateRecived.split("T")[0];
+                                } catch (Exception e) {
+                                    dateRecived = "";
                                     jsonReader.skipValue();
                                 }
                                 break;
@@ -89,11 +87,11 @@ public class OrderService implements  IOrderService {
                                 break;
                             case "begindate":
                                 beginDate = jsonReader.nextString();
-                                beginDate=beginDate.split("T")[0];
+                                beginDate = beginDate.split("T")[0];
                                 break;
                             case "enddate":
                                 endDate = jsonReader.nextString();
-                                endDate=endDate.split("T")[0];
+                                endDate = endDate.split("T")[0];
                                 break;
                             case "shippingmethod":
                                 shippingMethod = jsonReader.nextString();
@@ -104,9 +102,8 @@ public class OrderService implements  IOrderService {
                             case "cost":
                                 try {
                                     cost = jsonReader.nextLong();
-                                }
-                                catch (Exception e){
-                                    cost=0.0;
+                                } catch (Exception e) {
+                                    cost = 0.0;
                                     jsonReader.skipValue();
                                 }
                                 break;
@@ -118,15 +115,14 @@ public class OrderService implements  IOrderService {
                                 break;
                         }
                     }
-                    if(idUser==idUserSeller){
+                    if (idUser == idUserSeller) {
                         buyerOrSeller = "Seller";
-                    }
-                    else{
+                    } else {
                         buyerOrSeller = "Buyer";
                     }
                     //Add item to the list
                     Order objOrder =
-                            new Order(id,idAuction, isRecived,dateRecived,status,beginDate,endDate,shippingMethod,cardName,cost,buyerOrSeller,idUserSeller);
+                            new Order(id, idAuction, isRecived, dateRecived, status, beginDate, endDate, shippingMethod, cardName, cost, buyerOrSeller, idUserSeller);
                     orders.add(objOrder);
                     jsonReader.endObject();
                 }
@@ -135,35 +131,28 @@ public class OrderService implements  IOrderService {
                 myConnection.disconnect();
 
 
-
-
             } else {
                 // Error handling code goes here
 
             }
-        }
-        catch (MalformedURLException e) {
+        } catch (MalformedURLException e) {
             e.printStackTrace();
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
         return orders;
-
-
-
 
 
     }
 
     @Override
     public Order getOrder(int idorder, String type) {
-        Order objOrder=null;
+        Order objOrder = null;
 
         URL apiUrl = null;
         try {
 
-            apiUrl = new URL("http://192.168.1.2:49912/api/Orders?idOrder="+String.valueOf(idorder)+"&type="+type);
+            apiUrl = new URL("http://192.168.1.2:49912/api/Orders?idOrder=" + String.valueOf(idorder) + "&type=" + type);
             // Create connection
             HttpURLConnection myConnection = (HttpURLConnection) apiUrl.openConnection();
             if (myConnection.getResponseCode() == 200) {
@@ -179,83 +168,84 @@ public class OrderService implements  IOrderService {
                 JsonReader jsonReader = new JsonReader(responseBodyReader);
 
 
+                String cardName = "";
+                double cardCost = 0.0;
+                String endDate = "";
+                String shippingMethod = "";
+                String ContactName = "";
+                String phoneNumber = "";
+                Boolean isRecived = false;
 
 
-                String cardName="";
-                double cardCost=0.0;
-                String endDate="";
-                String shippingMethod="";
-                String ContactName="";
-                String phoneNumber="";
-                Boolean isRecived=false;
-
-
-                    //Read every object
-                    jsonReader.beginObject();
-                    String description = null;
-                    while(jsonReader.hasNext()){
-                        String property = jsonReader.nextName();
-                        switch (property.toLowerCase()){
-                           case "nameuserbuyer":try {
+                //Read every object
+                jsonReader.beginObject();
+                String description = null;
+                while (jsonReader.hasNext()) {
+                    String property = jsonReader.nextName();
+                    switch (property.toLowerCase()) {
+                        case "nameuserbuyer":
+                            try {
                                 ContactName = jsonReader.nextString();
-                            }catch (Exception e){
+                            } catch (Exception e) {
                                 jsonReader.skipValue();
                             }
-                                break;
-                            case "nameuserseller":try {
+                            break;
+                        case "nameuserseller":
+                            try {
                                 ContactName = jsonReader.nextString();
-                            }catch (Exception e){
+                            } catch (Exception e) {
                                 jsonReader.skipValue();
                             }
-                            case "phoneuserbuyer":try {
+                        case "phoneuserbuyer":
+                            try {
                                 phoneNumber = jsonReader.nextString();
-                            }catch (Exception e){
+                            } catch (Exception e) {
                                 jsonReader.skipValue();
                             }
-                                break;
-                            case "phoneuserseller":try {
+                            break;
+                        case "phoneuserseller":
+                            try {
                                 phoneNumber = jsonReader.nextString();
-                            }catch (Exception e){
+                            } catch (Exception e) {
                                 jsonReader.skipValue();
                             }
-                            case "enddate":
-                                endDate = jsonReader.nextString();
-                                endDate=endDate.split("T")[0];
-                                break;
-                            case "isrecived":
-                                isRecived = jsonReader.nextBoolean();
-                                break;
-                            case "shippingmethod":
-                                shippingMethod = jsonReader.nextString();
-                                break;
-                            case "cardname":
-                                cardName = jsonReader.nextString();
-                                break;
-                            case "cost":
-                                try {
-                                    cardCost = jsonReader.nextLong();
-                                }
-                                catch (Exception e){
-                                    cardCost=0.0;
-                                    jsonReader.skipValue();
-                                }
-                                break;
-                            default:
+                        case "enddate":
+                            endDate = jsonReader.nextString();
+                            endDate = endDate.split("T")[0];
+                            break;
+                        case "isrecived":
+                            isRecived = jsonReader.nextBoolean();
+                            break;
+                        case "shippingmethod":
+                            shippingMethod = jsonReader.nextString();
+                            break;
+                        case "cardname":
+                            cardName = jsonReader.nextString();
+                            break;
+                        case "cost":
+                            try {
+                                cardCost = jsonReader.nextLong();
+                            } catch (Exception e) {
+                                cardCost = 0.0;
                                 jsonReader.skipValue();
-                                break;
-                        }
+                            }
+                            break;
+                        default:
+                            jsonReader.skipValue();
+                            break;
+                    }
 
 
                     //Add item to the list
                     objOrder =
                             new Order();
-                        objOrder.setCardName(cardName);
-                        objOrder.setCost(cardCost);
-                        objOrder.setEndDate(endDate);
-                        objOrder.setShippingMethod(shippingMethod);
-                        objOrder.setContactName(ContactName);
-                        objOrder.setContactPhone(phoneNumber);
-                        objOrder.setIsReviced(isRecived);
+                    objOrder.setCardName(cardName);
+                    objOrder.setCost(cardCost);
+                    objOrder.setEndDate(endDate);
+                    objOrder.setShippingMethod(shippingMethod);
+                    objOrder.setContactName(ContactName);
+                    objOrder.setContactPhone(phoneNumber);
+                    objOrder.setIsReviced(isRecived);
                     jsonReader.endObject();
                 }
 
@@ -263,22 +253,16 @@ public class OrderService implements  IOrderService {
                 myConnection.disconnect();
 
 
-
-
             } else {
                 // Error handling code goes here
 
             }
-        }
-        catch (MalformedURLException e) {
+        } catch (MalformedURLException e) {
             e.printStackTrace();
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
         return objOrder;
-
-
 
 
     }
