@@ -1,12 +1,16 @@
 package com.example.xero.cardtradeapp;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.renderscript.Sampler;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -115,6 +119,17 @@ public class ProfileFragment extends Fragment {
         final GetTask getTask = new GetTask();
         getTask.execute();
 
+        final Button reglas = (Button)getView().findViewById(R.id.btnRules);
+        reglas.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            Intent intent = new Intent(getActivity(), RulesActivity.class);
+            getActivity().startActivity(intent);
+
+            }
+        });
+
 
         final Button editame =(Button)getView().findViewById(R.id.btnEdit);
         editame.setOnClickListener(new View.OnClickListener() {
@@ -215,6 +230,9 @@ public class ProfileFragment extends Fragment {
 
                         EditText editadress =(EditText)getView().findViewById(R.id.address);
                         editadress.setEnabled(false);
+
+
+
 
 
                     }
