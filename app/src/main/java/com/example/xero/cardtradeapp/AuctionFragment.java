@@ -2,6 +2,7 @@ package com.example.xero.cardtradeapp;
 
 import android.app.DatePickerDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -10,18 +11,23 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.SearchView;
 import android.text.InputType;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.xero.cardtradeapp.BusinessLogicFolder.AuctionBusinessLogic.AuctionService;
 import com.example.xero.cardtradeapp.BusinessLogicFolder.AuctionBusinessLogic.IAuctionService;
 import com.example.xero.cardtradeapp.Entities.Auction;
+import com.example.xero.cardtradeapp.Entities.Card;
 
 import java.math.BigDecimal;
 import java.text.ParseException;
@@ -33,8 +39,9 @@ import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
-public class AuctionFragment extends Fragment {
+public class AuctionFragment extends Fragment  {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -43,8 +50,10 @@ public class AuctionFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    public int CardId;
+    public String CardName;
     DatePickerDialog picker;
-    EditText name;
+    TextView name;
     EditText minAmount;
     EditText startDate;
     EditText endDate;
@@ -75,6 +84,13 @@ public class AuctionFragment extends Fragment {
         startDate = view.findViewById(R.id.etStartDate_auction);
         endDate = view.findViewById(R.id.etFinishDate_auction);
         createAuction = view.findViewById(R.id.btCreateAuction_auction);
+
+        Bundle bundle = this.getArguments();
+        if (bundle != null) {
+            CardId = bundle.getInt("CardId", 0);
+            CardName = bundle.getString("CardName");
+            name.setText(CardName);
+        }
 
         startDate.setInputType(InputType.TYPE_NULL);
         startDate.setOnClickListener(new View.OnClickListener() {
@@ -114,6 +130,16 @@ public class AuctionFragment extends Fragment {
                 picker.show();
             }
         });
+        name.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(view.getContext(),MainActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putInt("fragmentKey",1);
+                intent.putExtras(bundle);
+                startActivity(intent);
+            }
+        });
         createAuction.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
@@ -121,17 +147,16 @@ public class AuctionFragment extends Fragment {
                 Context context = getActivity();
 
                 Auction auction = new Auction();
-                int defaultValue = 0;
                 // get idUser from phone
                 SharedPreferences sharedPref = context.getSharedPreferences("User", Context.MODE_PRIVATE);
-                int userId = sharedPref.getInt("userId", defaultValue);
+                int userId = sharedPref.getInt("userId", 0);
 
 
                 auction.setIdUserSeller(userId);
                 auction.setStatus("active");
                 auction.setType("normal");
                 auction.setIdCurrentUser(0);
-                auction.setIdCard(Integer.parseInt(name.getText().toString())); // solo por mientras
+                auction.setIdCard(CardId);
 
                 SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
                 String dateInString1 = startDate.getText().toString()+"T00:00:00";
@@ -196,6 +221,8 @@ public class AuctionFragment extends Fragment {
     }
 
 
+
+
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated
@@ -225,8 +252,18 @@ public class AuctionFragment extends Fragment {
         protected void onPostExecute(Boolean isValid) {
             super.onPostExecute(isValid);
             //TOASTY
-            if(isValid) Toast.makeText(getContext(),"BIEN!",Toast.LENGTH_SHORT).show();
+            if(isValid) {
+                Toast.makeText(getContext(), "BIEN!", Toast.LENGTH_SHORT).show();
+                CardName="";
+                CardId=0;
+                name.setText("Product Name");
+                minAmount.setText("Minimun Amount");
+                startDate.setText("Start Date");
+                endDate.setText("Finish Date");
+            }
+
             else Toast.makeText(getContext(),"ERROR!",Toast.LENGTH_SHORT).show();
+
         }
     }
 }

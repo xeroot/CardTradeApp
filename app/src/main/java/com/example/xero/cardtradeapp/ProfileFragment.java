@@ -124,9 +124,8 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
-            Intent intent = new Intent(getActivity(), RulesActivity.class);
+            Intent intent = new Intent(view.getContext(), RulesActivity.class);
             getActivity().startActivity(intent);
-
             }
         });
 

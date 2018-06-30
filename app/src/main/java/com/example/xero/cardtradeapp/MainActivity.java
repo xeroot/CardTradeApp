@@ -9,16 +9,18 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
 import com.example.xero.cardtradeapp.Entities.Auction;
+import com.example.xero.cardtradeapp.Entities.Card;
 import com.example.xero.cardtradeapp.Entities.Order;
 
 public class MainActivity extends AppCompatActivity
-implements
+        implements
         AuctionsFragment.OnListFragmentInteractionListener,
         AuctionFragment.OnFragmentInteractionListener,
         ProfileFragment.OnFragmentInteractionListener,
         NotificationsFragment.OnFragmentInteractionListener,
         AuctionSelectedFragment.OnFragmentInteractionListener,
-        OrderFragment.OnListFragmentInteractionListener
+        OrderFragment.OnListFragmentInteractionListener,
+        CardFragment.OnListFragmentInteractionListener
 {
 
     //MenuItem itemSearch;
@@ -65,10 +67,35 @@ implements
         // navigation bar
         BottomNavigationView navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+        try {
+            int key = (int) getIntent().getExtras().get("fragmentKey");
 
+            switch (key) {
+                case 1:
+                    CardFragment cardFragment = new CardFragment();
+                    getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, cardFragment).commit();
+                    break;
+                case 2:
+                    AuctionFragment auctionFragment = new AuctionFragment();
+                    int CardId = (int) getIntent().getExtras().get("CardId");
+                    String CardName = (String) getIntent().getExtras().get("CardName");
+                    Bundle bundle = new Bundle();
+                    bundle.putInt("CardId",CardId );
+                    bundle.putString("CardName",CardName );
+                    auctionFragment.setArguments(bundle);
+                    getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, auctionFragment).commit();
+                    break;
+                default:
+                    AuctionsFragment homeFragment = new AuctionsFragment();
+                    getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, homeFragment).commit();
+                    break;
+            }
+        }catch (Exception e){
+            AuctionsFragment homeFragment = new AuctionsFragment();
+            getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, homeFragment).commit();
+        }
         // loading first layout
-        AuctionsFragment homeFragment = new AuctionsFragment();
-        getSupportFragmentManager().beginTransaction().add(R.id.fragment_container,homeFragment).commit();
+
 
     }
 
@@ -87,6 +114,11 @@ implements
 
     @Override
     public void onListFragmentInteraction(Order item) {
+
+    }
+
+    @Override
+    public void onListFragmentInteraction(Card item) {
 
     }
 

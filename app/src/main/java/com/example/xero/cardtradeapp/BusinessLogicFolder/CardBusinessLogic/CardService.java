@@ -29,29 +29,50 @@ public class CardService implements ICardService {
                 JsonReader jsonReader = new JsonReader(inputStreamReaderResponse);
                 jsonReader.beginArray();
                 // parsing ...
+
                 while(jsonReader.hasNext()){
                     jsonReader.beginObject();
                     Card card = new Card();
                     while(jsonReader.hasNext()){
                         String s = jsonReader.nextName();
-                        switch (s){
-                            case "Name":
+                        switch (s.toLowerCase()){
+                            case "id":
                                 card.setId(jsonReader.nextInt());
                                 break;
-                            case "Description":
+                            case "name":
                                 card.setName(jsonReader.nextString());
                                 break;
-                            case "asd":
-                                card.setName(jsonReader.nextString());
+                            case "description":
+                                card.setDescription(jsonReader.nextString());
                                 break;
-                            case "das":
-                                card.setName(jsonReader.nextString());
+                            case "cost":
+                                card.setCost(jsonReader.nextDouble());
                                 break;
-                            case "fdg":
-                                card.setName(jsonReader.nextString());
+                            case "minvalue":
+                                card.setMinvalue(jsonReader.nextDouble());
                                 break;
-                            case "nadfgme":
-                                card.setName(jsonReader.nextString());
+                            case "manacost":
+                                card.setManaCost(jsonReader.nextInt());
+                                break;
+                            case "power":
+                                try {
+                                    card.setPower(jsonReader.nextInt());
+                                }catch (Exception e){
+                                    card.setPower(0);
+                                    jsonReader.skipValue();
+                                }
+                                break;
+                            case "toughtness":
+                                try{
+                                    card.setToughness(jsonReader.nextInt());
+                                }catch (Exception e){
+                                    jsonReader.skipValue();
+                                    card.setToughness(0);
+                                }
+
+                                break;
+                            case "IsFoil":
+                                card.setFoil(jsonReader.nextBoolean());
                                 break;
                             default:
                                 jsonReader.skipValue();
@@ -66,6 +87,7 @@ public class CardService implements ICardService {
                 httpURLConnection.disconnect();
             }
             return cards;
-        }catch (Exception ex){Log.d("ERROR: ",ex.toString()+": "+ex.getMessage());return null;}
+        }catch (Exception ex)
+        {Log.d("ERROR: ",ex.toString()+": "+ex.getMessage());return null;}
     }
 }
