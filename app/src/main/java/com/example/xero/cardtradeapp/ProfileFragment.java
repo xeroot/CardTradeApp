@@ -6,22 +6,16 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.renderscript.Sampler;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import com.example.xero.cardtradeapp.BusinessLogicFolder.ProfileBusinessLogic.IProfileService;
 import com.example.xero.cardtradeapp.BusinessLogicFolder.ProfileBusinessLogic.ProfileService;
 import com.example.xero.cardtradeapp.Entities.Profile;
-import com.example.xero.cardtradeapp.Entities.User;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -124,7 +118,7 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
-            Intent intent = new Intent(view.getContext(), RulesActivity.class);
+            Intent intent = new Intent(view.getContext(), ReglasActivity.class);
             getActivity().startActivity(intent);
             }
         });
