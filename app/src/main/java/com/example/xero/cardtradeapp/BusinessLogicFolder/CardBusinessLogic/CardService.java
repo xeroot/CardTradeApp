@@ -3,6 +3,7 @@ package com.example.xero.cardtradeapp.BusinessLogicFolder.CardBusinessLogic;
 import android.util.JsonReader;
 import android.util.Log;
 
+import com.example.xero.cardtradeapp.CONSTANTES;
 import com.example.xero.cardtradeapp.Entities.Card;
 
 import java.io.InputStream;
@@ -18,7 +19,8 @@ public class CardService implements ICardService {
     public List<Card> getCards() {
         List<Card> cards = new ArrayList<>();
         try{
-            URL url = new URL("http://192.168.1.2:49912/api/Cards/"); //3719 //45455
+            CONSTANTES constantes = new CONSTANTES();
+            URL url = new URL(constantes.getURLBASE()+"Cards/"); //3719 //45455
             HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
 
             if(httpURLConnection.getResponseCode()==200){

@@ -3,6 +3,7 @@ package com.example.xero.cardtradeapp.BusinessLogicFolder.AuctionBusinessLogic;
 import android.util.JsonReader;
 import android.util.Log;
 
+import com.example.xero.cardtradeapp.CONSTANTES;
 import com.example.xero.cardtradeapp.Entities.Auction;
 
 import org.json.JSONObject;
@@ -20,10 +21,12 @@ public class AuctionService implements IAuctionService{
 
     @Override
     public List<Auction> getAuctions() {
+        CONSTANTES constantes = new CONSTANTES();
         List<Auction> auctions = new ArrayList<>();
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
         try{
-            URL url = new URL("http://192.168.1.2:49912/api/Auctions"); //3719 //45455
+
+            URL url = new URL(constantes.getURLBASE()+"Auctions"); //3719 //45455
             HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
 
             if(httpURLConnection.getResponseCode()==200){
@@ -94,9 +97,10 @@ public class AuctionService implements IAuctionService{
 
     @Override
     public boolean putAuction(int idAuction, int idUser, double newcurrentAmount) {
+        CONSTANTES constantes = new CONSTANTES();
         boolean result = false;
         try{
-            URL url = new URL("http://192.168.1.2:49912/api/Auctions?id="+idAuction+"&idUser="+idUser);
+            URL url = new URL(constantes.getURLBASE()+"Auctions?id="+idAuction+"&idUser="+idUser);
             HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
             httpURLConnection.setRequestMethod("PUT");
             httpURLConnection.setDoOutput(true);
@@ -125,8 +129,9 @@ public class AuctionService implements IAuctionService{
         //Default new item with status Created
         auction.setStatus("Created");
         Log.d("BIEN (pushAuction): ","ENTRANDO 2...!");
+        CONSTANTES constantes = new CONSTANTES();
         try {
-            URL apiUrl = new URL("http://192.168.1.2:49912/api/Auctions");
+            URL apiUrl = new URL(constantes.getURLBASE()+"Auctions");
 
             // Create connection
             HttpURLConnection myConnection = (HttpURLConnection) apiUrl.openConnection();

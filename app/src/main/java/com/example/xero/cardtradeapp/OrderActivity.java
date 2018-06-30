@@ -1,5 +1,6 @@
 package com.example.xero.cardtradeapp;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -33,9 +34,12 @@ public class OrderActivity extends AppCompatActivity {
         endDateOrder = findViewById(R.id.end_date_order);
         shippingMethod = findViewById(R.id.shipping_method_order);
         contactName = findViewById(R.id.contact_name_order);
-        contactPhone = findViewById(R.id.phonenumber);
+        contactPhone = findViewById(R.id.phonenumber_order);
+        Intent intent = getIntent();
+        int idOrder = intent.getIntExtra("Id",0);
+        String type = intent.getStringExtra("Type");
         final GetOrderTask getTask = new GetOrderTask();
-        getTask.execute();
+        getTask.execute(String.valueOf(idOrder),type);
     }
 
     public void fillSpace(Order order) {
@@ -53,7 +57,8 @@ public class OrderActivity extends AppCompatActivity {
         protected Order doInBackground(String... strings) {
 
             IOrderService orderAPI = new OrderService();
-            Order order = orderAPI.getOrder(Integer.getInteger(strings[0]), strings[1]);
+            int id = Integer.parseInt(strings[0]);
+            Order order = orderAPI.getOrder(id, strings[1]);
 
             return order;
         }

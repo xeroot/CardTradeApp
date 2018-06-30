@@ -3,6 +3,7 @@ package com.example.xero.cardtradeapp.BusinessLogicFolder.OrderBusinessLogic;
 
 import android.util.JsonReader;
 
+import com.example.xero.cardtradeapp.CONSTANTES;
 import com.example.xero.cardtradeapp.Entities.Order;
 
 import java.io.IOException;
@@ -20,8 +21,8 @@ public class OrderService implements IOrderService {
         URL apiUrl = null;
 
         try {
-
-            apiUrl = new URL("http://192.168.1.2:49912/api/Orders");
+            CONSTANTES constantes = new CONSTANTES();
+            apiUrl = new URL(constantes.getURLBASE()+"Orders?id="+idUser);
             // Create connection
             HttpURLConnection myConnection = (HttpURLConnection) apiUrl.openConnection();
             if (myConnection.getResponseCode() == 200) {
@@ -148,11 +149,11 @@ public class OrderService implements IOrderService {
     @Override
     public Order getOrder(int idorder, String type) {
         Order objOrder = null;
-
+        CONSTANTES constantes = new CONSTANTES();
         URL apiUrl = null;
         try {
 
-            apiUrl = new URL("http://192.168.1.2:49912/api/Orders?idOrder=" + String.valueOf(idorder) + "&type=" + type);
+            apiUrl = new URL(constantes.getURLBASE()+"Orders?idOrder=" + String.valueOf(idorder) + "&type=" + type.toLowerCase());
             // Create connection
             HttpURLConnection myConnection = (HttpURLConnection) apiUrl.openConnection();
             if (myConnection.getResponseCode() == 200) {
@@ -178,12 +179,17 @@ public class OrderService implements IOrderService {
 
 
                 //Read every object
+                //jsonReader.skipValue();
+                jsonReader.beginArray();
                 jsonReader.beginObject();
-                String description = null;
                 while (jsonReader.hasNext()) {
                     String property = jsonReader.nextName();
                     switch (property.toLowerCase()) {
+                        case"id":
+                            jsonReader.nextInt();
+                            break;
                         case "nameuserbuyer":
+
                             try {
                                 ContactName = jsonReader.nextString();
                             } catch (Exception e) {
@@ -196,6 +202,7 @@ public class OrderService implements IOrderService {
                             } catch (Exception e) {
                                 jsonReader.skipValue();
                             }
+                            break;
                         case "phoneuserbuyer":
                             try {
                                 phoneNumber = jsonReader.nextString();
@@ -209,6 +216,7 @@ public class OrderService implements IOrderService {
                             } catch (Exception e) {
                                 jsonReader.skipValue();
                             }
+                            break;
                         case "enddate":
                             endDate = jsonReader.nextString();
                             endDate = endDate.split("T")[0];
@@ -235,7 +243,7 @@ public class OrderService implements IOrderService {
                             break;
                     }
 
-
+                }
                     //Add item to the list
                     objOrder =
                             new Order();
@@ -247,7 +255,8 @@ public class OrderService implements IOrderService {
                     objOrder.setContactPhone(phoneNumber);
                     objOrder.setIsReviced(isRecived);
                     jsonReader.endObject();
-                }
+                    jsonReader.endArray();
+
 
                 jsonReader.close();
                 myConnection.disconnect();

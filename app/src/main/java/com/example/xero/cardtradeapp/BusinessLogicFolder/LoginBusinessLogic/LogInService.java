@@ -13,13 +13,16 @@ import java.net.URL;
 import android.support.v4.util.Pair;
 import android.util.Log;
 
+import com.example.xero.cardtradeapp.CONSTANTES;
+
 public class LogInService implements  ILogInService {
     @Override
     public Pair<Boolean,Integer> UserValid(String username, String password) {
         Boolean isValid = false;
         int userId= 0;
+        CONSTANTES constantes = new CONSTANTES();
         try {
-            String url = "http://192.168.1.2:49912/api/Users?username="+username+"&password="+password;
+            String url = constantes.getURLBASE()+"Users?username="+username+"&password="+password;
             URL apiUrl = new URL(url);
 
             // Create connection

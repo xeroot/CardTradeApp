@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.JsonReader;
 
+import com.example.xero.cardtradeapp.CONSTANTES;
 import com.example.xero.cardtradeapp.Entities.Profile;
 import com.example.xero.cardtradeapp.Entities.User;
 
@@ -24,11 +25,11 @@ public class ProfileService implements IProfileService {
 
         ArrayList<Profile> Items = null;
 
-
+        CONSTANTES constantes = new CONSTANTES();
         URL apiUrl = null;
         try {
 
-            apiUrl = new URL("http://192.168.1.2:49912/api/Profiles/"+idUsuario);
+            apiUrl = new URL(constantes.getURLBASE()+"Profiles/"+idUsuario);
             // Create connection
             HttpURLConnection myConnection = (HttpURLConnection) apiUrl.openConnection();
             if (myConnection.getResponseCode() == 200) {
@@ -156,10 +157,10 @@ public class ProfileService implements IProfileService {
 
         Boolean result = false;
         //Default new item with status Created
-
+        CONSTANTES constantes = new CONSTANTES();
         try {
             URL apiUrl =
-                    new URL("http://192.168.1.2:49912/api/Profiles/");
+                    new URL(constantes.getURLBASE()+"Profiles/");
 
             // Create connection
             HttpURLConnection myConnection =
